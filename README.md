@@ -35,7 +35,8 @@ Built at Haunted Hacks: Real-Time AI Edition (YC, SF, 2026-10-31) with **Terse D
 - `client/ghost.ts`: the agent loop, the persona prompt, the tools and the Exorcist.
 - `client/vm.ts`: the Freestyle "vessel" (create or re-enter a VM, exec, write, publish), plus a mock vessel for offline rehearsal.
 - `client/public/index.html`: the séance UI.
-- `client/record.ts`, `slides.ts`, `build.ts`: the narrated, captioned submission video (Playwright + OpenAI TTS + ffmpeg).
+- `client/record.ts`, `slides.ts`, `build.ts`: the narrated, captioned long-form video (Playwright + OpenAI TTS + ffmpeg).
+- `client/short.ts`: cuts the ≤2-minute submission video from the same recording (`video/ghostwatch-2min.mp4` + `.srt`).
 
 ## Run it
 

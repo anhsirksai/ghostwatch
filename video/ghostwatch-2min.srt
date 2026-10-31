@@ -1,0 +1,75 @@
+1
+00:00:00,400 --> 00:00:06,544
+GhostWatch: a séance for software. Coding agents are black boxes that can do real
+
+2
+00:00:06,544 --> 00:00:12,765
+damage and die when they crash. So we summon an AI ghost into a real Freestyle VM,
+
+3
+00:00:12,765 --> 00:00:18,227
+stream it live to everyone, and keep its state in a Terse durable actor.
+
+4
+00:00:18,833 --> 00:00:24,433
+Browsers connect to one durable Ghost actor. A disposable worker runs the OpenAI
+
+5
+00:00:24,433 --> 00:00:29,824
+agent, executes tools in the VM, and writes every step back, with an Exorcist
+
+6
+00:00:29,824 --> 00:00:31,294
+screening everything.
+
+7
+00:00:32,024 --> 00:00:37,533
+Here's the live séance: two browsers, both connected to the same Terse durable
+
+8
+00:00:37,533 --> 00:00:37,956
+actor.
+
+9
+00:00:39,722 --> 00:00:42,276
+I make a wish, and summon the ghost.
+
+10
+00:00:44,600 --> 00:00:51,832
+A fresh Freestyle VM boots in under a second. The OpenAI ghost narrates and runs
+
+11
+00:00:51,832 --> 00:00:54,454
+real commands, streamed live.
+
+12
+00:00:57,679 --> 00:01:01,571
+It writes the whole app into the VM.
+
+13
+00:01:03,178 --> 00:01:07,804
+Another spectator throws a curse: make it rain bats.
+
+14
+00:01:08,924 --> 00:01:14,988
+A malicious rm -rf curse? The Exorcist blocks it instantly.
+
+15
+00:01:16,132 --> 00:01:19,461
+Now I kill -9 the worker, mid-build.
+
+16
+00:01:21,047 --> 00:01:28,180
+It restarts and re-enters the same VM. Nothing lost: the state lives in the actor.
+
+17
+00:01:29,425 --> 00:01:33,561
+The ghost publishes its app on a public URL.
+
+18
+00:01:38,567 --> 00:01:44,235
+And here's the real app, bats included, served from the Freestyle VM.
+
+19
+00:01:46,440 --> 00:01:51,198
+GhostWatch. Code on GitHub. Happy Halloween!
