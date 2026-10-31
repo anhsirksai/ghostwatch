@@ -13,6 +13,6 @@
 
 **How it's built:** Terse `Ghost` actor (`@Persisted @Emittable` state, WebSocket messages) · Bun supervisor/worker · OpenAI tool calling (`run`, `write_file`, `publish`, `finish`) · Freestyle SDK (`vms.create`, `vm.exec`, `vm.fs`, `tls.rules` for public HTTPS) · a single-page séance UI.
 
-**Video (4:39, narrated, closed captions):** https://www.youtube.com/watch?v=yusV9XR0Xjo
+**Video (1:51, narrated, closed captions):** https://youtu.be/lw_Fp7_xtcQ
 
 **Code:** https://github.com/anhsirksai/ghostwatch

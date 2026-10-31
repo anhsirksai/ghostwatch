@@ -4,7 +4,7 @@
 
 Built at Haunted Hacks: Real-Time AI Edition (YC, SF, 2026-10-31) with **Terse Durable Actors**, **Freestyle VMs** and **OpenAI**.
 
-📺 **Demo video:** https://www.youtube.com/watch?v=yusV9XR0Xjo
+📺 **Demo video (2 min):** https://youtu.be/lw_Fp7_xtcQ · [full 4:39 walkthrough](https://www.youtube.com/watch?v=yusV9XR0Xjo)
 
 ## What it does
 
