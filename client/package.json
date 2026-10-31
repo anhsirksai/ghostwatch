@@ -1,0 +1,20 @@
+{
+    "name": "client",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "bun server.ts",
+        "check": "tsc --noEmit"
+    },
+    "dependencies": {
+        "freestyle": "^0.2.21",
+        "openai": "^7.47.0",
+        "terse-sdk": "0.14.9"
+    },
+    "devDependencies": {
+        "@types/bun": "^1.4.4",
+        "@types/node": "^22.0.0",
+        "playwright": "^1.64.1",
+        "typescript": "~5.9.3"
+    }
+}

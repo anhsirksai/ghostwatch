@@ -1,0 +1,18 @@
+# secrets and local state
+.env
+.env.*
+!.env.example
+.agentworkforce/
+.durable-actors/
+client/mock-vm/
+
+# build output / deps
+node_modules/
+generated/
+dist/
+
+# video artifacts (the demo lives on YouTube)
+*.mp4
+*.webm
+video/raw/
+.DS_Store

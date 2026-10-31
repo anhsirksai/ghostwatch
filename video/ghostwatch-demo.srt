@@ -1,0 +1,215 @@
+1
+00:00:00,600 --> 00:00:07,321
+Hi! This is GhostWatch: a séance for software. Summon an AI agent into a real cloud
+
+2
+00:00:07,321 --> 00:00:11,856
+computer, and everyone watches it build your idea, live.
+
+3
+00:00:13,467 --> 00:00:18,962
+The problem: coding agents are black boxes. You can't follow or steer them, they run
+
+4
+00:00:18,962 --> 00:00:24,260
+where one bad command does real damage, a crash loses everything, and nobody else
+
+5
+00:00:24,260 --> 00:00:24,915
+can watch.
+
+6
+00:00:26,517 --> 00:00:32,309
+Our solution: the ghost, an OpenAI agent, possesses a fresh Freestyle VM and builds
+
+7
+00:00:32,309 --> 00:00:38,171
+there. Everything streams live to every viewer. Anyone can throw curses to steer it.
+
+8
+00:00:38,171 --> 00:00:44,033
+The Exorcist blocks anything dangerous. And state lives in a Terse durable actor, so
+
+9
+00:00:44,033 --> 00:00:45,429
+it survives crashes.
+
+10
+00:00:47,050 --> 00:00:52,034
+Browsers connect over WebSocket to one Terse durable actor, the Ghost, whose
+
+11
+00:00:52,034 --> 00:00:57,345
+persisted state syncs to everyone automatically. A disposable Bun worker runs the
+
+12
+00:00:57,345 --> 00:01:02,854
+agent against OpenAI, executes tools in the Freestyle VM, and writes every step back
+
+13
+00:01:02,854 --> 00:01:03,706
+to the actor.
+
+14
+00:01:05,317 --> 00:01:10,574
+The agents talk only through the actor. Spectators' curses queue there and pass the
+
+15
+00:01:10,574 --> 00:01:15,325
+Exorcist; the ghost's tool results flow back and are broadcast to everyone.
+
+16
+00:01:16,927 --> 00:01:22,444
+The code is small on purpose: the actor, a server with a supervisor, the agent loop
+
+17
+00:01:22,444 --> 00:01:27,895
+with the Exorcist, and a Freestyle vessel with an offline mock. Let's see it live.
+
+18
+00:01:30,685 --> 00:01:36,711
+This is the live séance. Two browsers are connected right now — mine, and a second
+
+19
+00:01:36,711 --> 00:01:41,341
+spectator — both as WebSockets on the same Terse durable actor.
+
+20
+00:01:41,591 --> 00:01:47,277
+Left: the ghost's live stream. Right: the portal where its app will appear, and the
+
+21
+00:01:47,277 --> 00:01:49,607
+curse panel any spectator can use.
+
+22
+00:01:49,857 --> 00:01:53,409
+I make a wish, and summon the ghost.
+
+23
+00:02:01,210 --> 00:02:06,421
+The worker just booted a brand-new Freestyle VM in under a second. The ghost — an
+
+24
+00:02:06,421 --> 00:02:10,474
+OpenAI agent — is now inside it, checking which runtimes exist.
+
+25
+00:02:10,724 --> 00:02:15,916
+Every thought, command and output is appended to the durable actor, which pushes it
+
+26
+00:02:15,916 --> 00:02:20,732
+to every viewer instantly. The agents talk through the actor, never directly.
+
+27
+00:02:21,732 --> 00:02:27,106
+We're fast-forwarding through the model's thinking time. Everything you see is real
+
+28
+00:02:27,106 --> 00:02:27,948
+and unedited.
+
+29
+00:02:31,193 --> 00:02:36,857
+It just wrote the entire app into the VM — you can see the file land in the stream.
+
+30
+00:02:37,107 --> 00:02:42,679
+Now the other spectator throws a curse: make it rain bats. It travels over their
+
+31
+00:02:42,679 --> 00:02:47,067
+WebSocket into the actor. On its next turn the ghost must obey.
+
+32
+00:02:47,317 --> 00:02:52,466
+Someone malicious tries to curse the ghost into running rm -rf. The Exorcist
+
+33
+00:02:52,466 --> 00:02:58,089
+intercepts it — destructive commands, secrets and prompt injections never reach the
+
+34
+00:02:58,089 --> 00:02:59,173
+agent or the VM.
+
+35
+00:02:59,423 --> 00:03:06,479
+Now the scary part. I kill -9 the worker process, mid-build.
+
+36
+00:03:06,729 --> 00:03:12,268
+The browser stays connected to the actor. The wish, the step, the VM id and pending
+
+37
+00:03:12,268 --> 00:03:14,337
+curses are all persisted there.
+
+38
+00:03:14,587 --> 00:03:20,915
+The worker comes back, finds a haunting in progress, and re-enters the exact same
+
+39
+00:03:20,915 --> 00:03:22,243
+VM. Nothing lost.
+
+40
+00:03:22,493 --> 00:03:28,155
+While it finishes, notice the ghost narrating in character. That narration is the
+
+41
+00:03:28,155 --> 00:03:30,461
+real model output, streamed live.
+
+42
+00:03:30,711 --> 00:03:37,359
+The ghost published its app on a public HTTPS URL, served straight from the
+
+43
+00:03:37,359 --> 00:03:38,511
+Freestyle VM.
+
+44
+00:03:39,511 --> 00:03:44,723
+While the model thinks, nothing is polling. The actor pushes each change to every
+
+45
+00:03:44,723 --> 00:03:46,975
+browser the moment it is persisted.
+
+46
+00:03:47,453 --> 00:03:53,967
+Here it is, full screen: a real app, built live by an AI agent in a cloud VM, while
+
+47
+00:03:53,967 --> 00:03:55,301
+everyone watched.
+
+48
+00:03:55,551 --> 00:03:58,719
+Anyone can open this link right now.
+
+49
+00:03:58,969 --> 00:04:06,172
+And the whole séance — log, curses, VM — lives on in the durable actor, ready for
+
+50
+00:04:06,172 --> 00:04:07,417
+the next wish.
+
+51
+00:04:09,030 --> 00:04:16,583
+To run it: start the Terse actor server, install the client, add your OpenAI and
+
+52
+00:04:16,583 --> 00:04:24,042
+Freestyle keys, run bun server dot ts, and open localhost 8790 in two browsers.
+
+53
+00:04:24,042 --> 00:04:29,046
+Wish, summon, curse, and open the public portal link.
+
+54
+00:04:30,663 --> 00:04:38,367
+GhostWatch: durable ghosts, real VMs, live AI. Happy Halloween!

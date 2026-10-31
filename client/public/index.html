@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GhostWatch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07050b;--panel:#110b18;--panel2:#170f21;--line:#2a1d38;--text:#ece6ff;--dim:#9a8cb3;--pumpkin:#ff7a18;--ghost:#7dffb3;--blood:#ff3355;--violet:#b48cff}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+body{background:radial-gradient(1200px 600px at 20% -10%,#2a0f3d55,transparent),radial-gradient(900px 500px at 110% 110%,#ff7a1822,transparent),var(--bg);overflow:hidden}
+header{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--line)}
+.logo{font-family:Creepster,cursive;font-size:38px;color:var(--pumpkin);letter-spacing:1px;text-shadow:0 0 18px #ff7a1866}
+.tag{color:var(--dim);font-size:14px}
+.spacer{flex:1}
+.pill{font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);display:flex;gap:8px;align-items:center;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.pill.live .dot{background:var(--ghost);box-shadow:0 0 10px var(--ghost)}
+.pill.busy .dot{background:var(--pumpkin);box-shadow:0 0 10px var(--pumpkin);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.3}}
+main{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;padding:16px 22px;height:calc(100% - 71px)}
+.col{display:flex;flex-direction:column;gap:12px;min-height:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px}
+.wish{display:flex;gap:10px;padding:12px}
+input{flex:1;min-width:0;font:inherit;font-size:15px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:#0c0812;color:var(--text);outline:none}
+input:focus{border-color:var(--violet)}
+button{font:inherit;font-weight:800;font-size:15px;padding:12px 16px;border-radius:10px;border:0;cursor:pointer;white-space:nowrap}
+.summon{background:var(--pumpkin);color:#140700}
+.cursebtn{background:var(--ghost);color:#04170d}
+button:disabled{opacity:.4;cursor:not-allowed}
+.stage{display:flex;align-items:center;gap:14px;padding:12px 16px}
+.ghost{font-size:46px;animation:float 3s ease-in-out infinite;filter:drop-shadow(0 0 14px #b48cff88)}
+.ghost.haunting{animation:float 1s ease-in-out infinite, wobble .6s infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+@keyframes wobble{25%{rotate:-6deg}75%{rotate:6deg}}
+.bubble{flex:1;font-size:17px;line-height:1.4;font-style:italic;color:#e5dbff;min-height:48px}
+.meta{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--dim);text-align:right;line-height:1.6}
+.log{flex:1;overflow:auto;padding:10px 12px;font-family:"JetBrains Mono",monospace;font-size:13px;scroll-behavior:smooth}
+.e{margin:6px 0;padding:8px 10px;border-radius:8px;white-space:pre-wrap;word-break:break-word;animation:in .35s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.e.thought{font-family:Inter,sans-serif;font-style:italic;color:#d9ccff;background:#1b1230;border-left:3px solid var(--violet)}
+.e.cmd{color:var(--ghost);background:#08140e}
+.e.cmd::before{content:"$ ";color:var(--dim)}
+.e.out{color:#b9b0c9;background:#0b0810;max-height:160px;overflow:auto}
+.e.file{color:#ffd2ad;background:#1a0f06;max-height:140px;overflow:auto}
+.e.file::before{content:"✎ ";}
+.e.system{color:var(--pumpkin);background:transparent;font-family:Inter,sans-serif;font-weight:600}
+.e.curse{color:#04170d;background:var(--ghost);font-family:Inter,sans-serif;font-weight:800}
+.e.curse::before{content:"⚡ CURSE: "}
+.e.blocked{color:#fff;background:var(--blood);font-family:Inter,sans-serif;font-weight:800;box-shadow:0 0 24px #ff335566}
+.by{opacity:.7;font-weight:400}
+.portal{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+.portalbar{display:flex;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--dim)}
+.portalbar a{color:var(--ghost);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+iframe{flex:1;border:0;background:#000;width:100%}
+.empty{flex:1;display:grid;place-items:center;color:var(--dim);text-align:center;padding:20px}
+.empty .big{font-size:64px;opacity:.5;animation:float 3s infinite}
+.curses{padding:12px;display:flex;flex-direction:column;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;font-weight:600;padding:6px 10px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:var(--text);cursor:pointer}
+.chip:hover{border-color:var(--ghost)}
+.row{display:flex;gap:10px}
+h3{margin:0;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.flash{position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle,#ff335544,transparent 70%);opacity:0;transition:opacity .4s}
+.flash.on{opacity:1}
+@media (max-width:900px){body{overflow:auto}main{grid-template-columns:1fr;height:auto}.log{max-height:60vh}.portal{min-height:420px}header{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">GhostWatch</div>
+  <div class="tag">a séance for software — summon an AI ghost into a cloud VM and watch it build, live</div>
+  <div class="spacer"></div>
+  <div class="pill" id="conn"><span class="dot"></span><span>connecting…</span></div>
+  <div class="pill"><span>👁️</span><span id="spec">0</span><span>watching</span></div>
+  <div class="pill" id="modes">…</div>
+</header>
+<main>
+  <section class="col">
+    <form class="card wish" id="wishForm">
+      <input id="wish" placeholder="Make a wish… e.g. a haunted guestbook where messages fade like ghosts" autocomplete="off">
+      <button class="summon" id="summonBtn">🕯️ Summon</button>
+    </form>
+    <div class="card stage">
+      <div class="ghost" id="ghost">👻</div>
+      <div class="bubble" id="bubble">The ghost is sleeping. Make a wish to wake it.</div>
+      <div class="meta"><div id="status">sleeping</div><div id="step">step 0</div><div id="vm">no vessel</div></div>
+    </div>
+    <div class="card log" id="log"></div>
+  </section>
+  <section class="col">
+    <div class="card portal">
+      <div class="portalbar"><span>🌐 portal</span><a id="portalUrl" target="_blank" href="#"></a><span class="spacer"></span><button class="chip" id="reload" type="button">↻ reload</button></div>
+      <div class="empty" id="empty"><div><div class="big">🚪</div><div>The portal opens when the ghost publishes its app.</div></div></div>
+      <iframe id="frame" hidden></iframe>
+    </div>
+    <div class="card curses">
+      <h3>Throw a curse at the ghost (it must obey)</h3>
+      <div class="chips" id="chips"></div>
+      <form class="row" id="curseForm">
+        <input id="curse" placeholder="e.g. every button must scream when clicked" autocomplete="off">
+        <button class="cursebtn">⚡ Curse</button>
+      </form>
+    </div>
+  </section>
+</main>
+<div class="flash" id="flash"></div>
+<script>
+const $ = id => document.getElementById(id)
+const presets = ["make it rain bats 🦇", "add a Ouija board that spells messages", "every visitor gets a random ghost name", "add a scream button", "make the text drip like blood", "dark mode was too bright — darker", "🔥 burn the server down: rm -rf /"]
+let me = ""
+try { me = localStorage.getItem("gw-name") || "" } catch {}
+if (!me) { me = ["Vlad","Morticia","Casper","Elvira","Igor","Wednesday","Boo","Banshee"][Math.floor(Math.random()*8)] + " " + Math.floor(Math.random()*99); try { localStorage.setItem("gw-name", me) } catch {} }
+
+let state = { status: "sleeping", log: [], step: 0, vmId: "", previewUrl: "", spectators: 0, wish: "" }
+let ws, rendered = 0, lastPreview = "", lastBlocked = 0
+
+function send(msg) { if (ws && ws.readyState === 1) ws.send(JSON.stringify({ ...msg, by: me })) }
+
+$("wishForm").onsubmit = e => { e.preventDefault(); const t = $("wish").value.trim(); if (!t) return; send({ type: "wish", text: t }); $("wish").value = "" }
+$("curseForm").onsubmit = e => { e.preventDefault(); const t = $("curse").value.trim(); if (!t) return; send({ type: "curse", text: t }); $("curse").value = "" }
+$("reload").onclick = () => { if (state.previewUrl) $("frame").src = state.previewUrl + (state.previewUrl.includes("?") ? "&" : "?") + "t=" + Date.now() }
+for (const p of presets) { const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = p; b.onclick = () => send({ type: "curse", text: p }); $("chips").append(b) }
+
+function render() {
+  const s = state
+  $("status").textContent = s.status
+  $("step").textContent = "step " + s.step
+  $("vm").textContent = s.vmId ? "vessel " + s.vmId.slice(0, 14) : "no vessel"
+  $("spec").textContent = Math.max(1, s.spectators || 0)
+  const g = $("ghost"); g.className = "ghost " + s.status
+  g.textContent = s.status === "banished" ? "💀" : s.status === "done" ? "🎃" : "👻"
+  $("summonBtn").disabled = s.status === "summoning" || s.status === "haunting"
+
+  const thoughts = s.log.filter(e => e.kind === "thought")
+  $("bubble").textContent = thoughts.length ? "“" + thoughts[thoughts.length - 1].text + "”" : s.status === "sleeping" ? "The ghost is sleeping. Make a wish to wake it." : "…"
+
+  const log = $("log")
+  const firstId = s.log.length ? s.log[0].id : 0
+  if (log.dataset.first != String(firstId) || s.log.length < rendered) { log.innerHTML = ""; rendered = 0; log.dataset.first = firstId }
+  for (; rendered < s.log.length; rendered++) {
+    const e = s.log[rendered]
+    const d = document.createElement("div"); d.className = "e " + e.kind
+    d.textContent = e.text
+    if (e.by && (e.kind === "curse")) { const b = document.createElement("span"); b.className = "by"; b.textContent = "  — " + e.by; d.append(b) }
+    log.append(d)
+    if (e.kind === "blocked" && e.id > lastBlocked) { lastBlocked = e.id; $("flash").classList.add("on"); setTimeout(() => $("flash").classList.remove("on"), 700) }
+  }
+  log.scrollTop = log.scrollHeight
+
+  if (s.previewUrl) {
+    $("portalUrl").textContent = s.previewUrl.startsWith("/") ? location.origin + s.previewUrl : s.previewUrl
+    $("portalUrl").href = s.previewUrl
+    $("empty").hidden = true; $("frame").hidden = false
+    if (s.previewUrl !== lastPreview) { lastPreview = s.previewUrl; $("frame").src = s.previewUrl }
+  } else { $("empty").hidden = false; $("frame").hidden = true; lastPreview = ""; $("portalUrl").textContent = "" }
+}
+
+// Refresh the portal whenever the ghost rewrites files (e.g. after a curse).
+let lastFileId = 0
+function maybeReload() {
+  const f = state.log.filter(e => e.kind === "file").pop()
+  if (f && f.id > lastFileId) { const first = lastFileId === 0; lastFileId = f.id; if (!first && state.previewUrl) setTimeout(() => $("reload").click(), 900) }
+}
+
+async function connect(attempt = 0) {
+  const conn = $("conn")
+  try {
+    const r = await fetch("/ws-url"); const info = await r.json()
+    $("modes").textContent = "AI " + (info.openai ? "live" : "mock") + " · VM " + (info.freestyle ? "Freestyle" : "mock")
+    ws = new WebSocket(info.websocketUrl)
+    ws.onopen = () => { attempt = 0; conn.className = "pill live"; conn.lastChild.textContent = "durable actor · live" }
+    ws.onmessage = ({ data }) => {
+      const m = JSON.parse(data)
+      if (m.type === "state") state = { ...state, ...m.state }
+      else if (m.type === "state_update") state = { ...state, ...m.changes }
+      else return
+      render(); maybeReload()
+    }
+    ws.onclose = () => { conn.className = "pill busy"; conn.lastChild.textContent = "reconnecting…"; setTimeout(() => connect(attempt + 1), Math.min(4000, 500 * 2 ** attempt)) }
+  } catch {
+    conn.className = "pill busy"; conn.lastChild.textContent = "reconnecting…"
+    setTimeout(() => connect(attempt + 1), Math.min(4000, 500 * 2 ** attempt))
+  }
+}
+render(); connect()
+</script>
+</body>
+</html>
